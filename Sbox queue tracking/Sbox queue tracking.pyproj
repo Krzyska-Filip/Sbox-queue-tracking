@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>5991af9b-4c3e-4812-a155-496729bc61ae</ProjectGuid>
+    <ProjectGuid>{5991af9b-4c3e-4812-a155-496729bc61ae}</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>Sbox_queue_tracking.py</StartupFile>
     <SearchPath>
