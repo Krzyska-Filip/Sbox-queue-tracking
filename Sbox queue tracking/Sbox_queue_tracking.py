@@ -5,10 +5,23 @@ import datetime
 import time
 import win32gui, win32con
 import os
+import sqlite3
 from plyer import notification
 from requests.api import request
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
+
+#Create sqlite
+con = sqlite3.connect('terry\'s whitelist.db')
+cur = con.cursor()
+cur.execute('''
+    CREATE TABLE IF NOT EXISTS `history`(
+        `curPosition` INT,
+        `queueLength` INT,
+        `daysRemaining` INT,
+        `datetime` TEXT
+    ); ''')
+con.commit()
 
 #Env variables
 load_dotenv()
@@ -36,6 +49,7 @@ payloadSteam = {
     }
 
 def getInfo():
+    now = datetime.datetime.now()
     #Get openid
     source = user.session.get(steamurl, params=payloadSteam)
     soup = BeautifulSoup(source.text, 'html.parser')
@@ -53,27 +67,33 @@ def getInfo():
     source = user.session.post(steamurl, data=payloadSbox, allow_redirects=True)
 
     #Retrive data from Sbox
-    #TODO: add 'under construction' handling
     soup = BeautifulSoup(source.text, 'html.parser')
+
+    #If site doesn't work insert -1 into table
+    #Don't know if it works [It should]
+    if(soup.title != "Login - s&box"):
+        con = sqlite3.connect('terry\'s whitelist.db')
+        cur = con.cursor()
+        query = " INSERT INTO `history` VALUES (?, ?, ?, ?); "
+        data = (-1, -1, -1, now.strftime("%Y-%m-%d %H:%M:00"))
+        cur.execute(query, data)
+        con.commit()
+        return
+
     errorbox = soup.find('div', {'class': 'errorbox'}).find('div').text
     data = str(errorbox).strip().split()
-    position = data[2][:-1]
+    position = data[2][:-1].replace(',', '')
     position = position.split('/')
     score = data[7][:-1]
     days = data[17]
-
-    now = datetime.datetime.now()
     
-    #Save data to file
-    #TODO: change to sqlite
-    with open("log.txt", 'a', encoding = 'utf-8') as f:
-        f.write("{datetime} | {position} | {queue} | {days}\n".format(
-                datetime = now.strftime("%m/%d/%Y %H:%M:00"),
-                position = position[0],
-                queue = position[1],
-                score = score,
-                days = days
-            ))
+    #Save to db
+    con = sqlite3.connect('terry\'s whitelist.db')
+    cur = con.cursor()
+    query = " INSERT INTO `history` VALUES (?, ?, ?, ?); "
+    data = (position[0], position[1], days, now.strftime("%Y-%m-%d %H:%M:00"))
+    cur.execute(query, data)
+    con.commit()
 
     #Notification
     #TODO: chage it to pure win32api
