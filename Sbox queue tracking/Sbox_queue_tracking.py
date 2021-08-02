@@ -71,7 +71,7 @@ def getInfo():
 
     #If site doesn't work insert -1 into table
     #Don't know if it works [It should]
-    if(soup.title != "Login - s&box"):
+    if(soup.title.text != "Login - s&box"):
         con = sqlite3.connect('terry\'s whitelist.db')
         cur = con.cursor()
         query = " INSERT INTO `history` VALUES (?, ?, ?, ?); "
