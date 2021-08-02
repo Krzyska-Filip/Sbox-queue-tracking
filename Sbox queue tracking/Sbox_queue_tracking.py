@@ -78,6 +78,7 @@ def getInfo():
         data = (-1, -1, -1, now.strftime("%Y-%m-%d %H:%M:00"))
         cur.execute(query, data)
         con.commit()
+        con.close()
         return
 
     errorbox = soup.find('div', {'class': 'errorbox'}).find('div').text
@@ -94,6 +95,7 @@ def getInfo():
     data = (position[0], position[1], days, now.strftime("%Y-%m-%d %H:%M:00"))
     cur.execute(query, data)
     con.commit()
+    con.close()
 
     #Notification
     #TODO: chage it to pure win32api
