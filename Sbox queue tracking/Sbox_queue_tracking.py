@@ -237,7 +237,7 @@ def generatePage():
                 </div>
             </div>
 
-        '''.format(position=Today[0][0], queue=Today[0][1], days=Today[0][2],
+        '''.format(position=Today[len(Today)-1][0], queue=Today[len(Today)-1][1], days=Today[len(Today)-1][2],
                    pt=Today[len(Today)-1][0] - Today[0][0], qt=Today[len(Today)-1][1] - Today[0][1],
                    p24=LastDay[min(len(LastDay)-1, 23)][0] - LastDay[0][0], q24=LastDay[min(len(LastDay)-1, 23)][1] - LastDay[0][1],
                    p48=LastTwoDays[min(len(LastTwoDays)-1, 47)][0] - LastTwoDays[0][0], q48=LastTwoDays[min(len(LastTwoDays)-1, 47)][1] - LastTwoDays[0][1]) + '''
