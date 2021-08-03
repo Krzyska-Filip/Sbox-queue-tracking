@@ -66,9 +66,11 @@
                 }
                 #PositionChartDiv{
                     grid-column: 1 / 2;
+                    min-width: 0;
                 }
                 #QueueChartDiv{
                     grid-column: 2 / 3;
+                    min-width: 0;
                 }
                 #PositionChart, #QueueChart{
                     border-radius: 5px;
@@ -80,7 +82,7 @@
             <div class="background-media" style="background-image: url( https://files.facepunch.com/garry/77dafb40-9a3e-4af5-9f2c-a76c2bb3c76d.jpg )"></div>
             <div class="header">
                 <img src="sbox.ico" width="64" height="64">
-                <p id="position">Position: 894/22710</p>
+                <p id="position">Position: 891/22990</p>
                 <p id="days">Days: 12</p>            </div>
         </body>
 
@@ -90,10 +92,14 @@
             </div>
             <div class="analyse">
                 <div class="positionStats">
-                    <p>[Last 24h] Position: -15</p>
+                    <p>[Today] Position: -20</p>
+                    <p>[Last 24h] Position: -34</p>
+                    <p>[Last 48h] Position: -38</p>
                 </div>
                 <div class="queueStats">
-                    <p>[Last 24h] Queue: 627</p>
+                    <p>[Today] Position: 203</p>
+                    <p>[Last 24h] Queue: 712</p>
+                    <p>[Last 48h] Queue: 1110</p>
                 </div>
             </div>
 
@@ -107,11 +113,11 @@
         var PositionChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['22:00', '23:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
+                labels: ['11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '00:00', '10:00'],
                 datasets: [
                     {
                     label: '',
-                    data: [909, 908, 906, 905, 902, 898, 896, 895, 892, 894],
+                    data: [905, 902, 898, 896, 895, 892, 894, 894, 892, 894, 896, 895, 893, 891, 871],
                     borderColor: 'rgba(54, 162, 235, 1)',
                     backgroundColor: 'rgba(54, 162, 235, 1)'
                     },
@@ -147,11 +153,11 @@
         var QueueChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['22:00', '23:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
+                labels: ['11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '00:00', '10:00'],
                 datasets: [
                     {
                     label: '',
-                    data: [22083, 22135, 22483, 22481, 22524, 22558, 22592, 22639, 22671, 22710],
+                    data: [22481, 22524, 22558, 22592, 22639, 22671, 22710, 22740, 22772, 22816, 22862, 22918, 22959, 22990, 23193],
                     borderColor: 'rgba(255, 159, 64, 1)',
                     backgroundColor: 'rgba(255, 159, 64, 1)'
                     },

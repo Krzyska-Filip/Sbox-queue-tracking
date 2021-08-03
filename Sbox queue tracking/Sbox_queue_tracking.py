@@ -119,13 +119,16 @@ def getInfo():
     generatePage()
 
 #Pure JS doesn't support sql that's why I generate html page here.
+#Todo: Add last 48h, add only today, add switch to change chart
 def generatePage():
     con = sqlite3.connect('terry\'s whitelist.db')
     cur = con.cursor()
-    cur.execute("SELECT * FROM `history` WHERE rowid=(SELECT MAX(rowid) FROM `history`);")
-    LastRow = cur.fetchall()
-    cur.execute("""SELECT * FROM `history` WHERE datetime BETWEEN DATETIME(?, '-1 day') AND DATETIME(?)""", (LastRow[0][3], LastRow[0][3]))
+    cur.execute("""SELECT * FROM `history` WHERE `datetime` BETWEEN DATETIME('now', 'localtime', 'start of day') AND DATETIME('now', 'localtime');""")
+    Today = cur.fetchall()
+    cur.execute("""SELECT * FROM `history` WHERE `datetime` BETWEEN DATETIME('now', 'localtime', '-1 day') AND DATETIME('now', 'localtime')""")
     LastDay = cur.fetchall()
+    cur.execute("""SELECT * FROM `history` WHERE `datetime` BETWEEN DATETIME('now', 'localtime', '-2 day') AND DATETIME('now', 'localtime')""")
+    LastTwoDays = cur.fetchall()
     con.close()
 
     page = '''
@@ -196,9 +199,11 @@ def generatePage():
                 }
                 #PositionChartDiv{
                     grid-column: 1 / 2;
+                    min-width: 0;
                 }
                 #QueueChartDiv{
                     grid-column: 2 / 3;
+                    min-width: 0;
                 }
                 #PositionChart, #QueueChart{
                     border-radius: 5px;
@@ -221,14 +226,21 @@ def generatePage():
             </div>
             <div class="analyse">
                 <div class="positionStats">
+                    <p>[Today] Position: {pt}</p>
                     <p>[Last 24h] Position: {p24}</p>
+                    <p>[Last 48h] Position: {p48}</p>
                 </div>
                 <div class="queueStats">
+                    <p>[Today] Position: {qt}</p>
                     <p>[Last 24h] Queue: {q24}</p>
+                    <p>[Last 48h] Queue: {q48}</p>
                 </div>
             </div>
 
-        '''.format(position=LastRow[0][0], queue=LastRow[0][1], days=LastRow[0][2], p24=LastDay[min(len(LastDay)-1, 23)][0]-LastDay[0][0], q24=LastDay[min(len(LastDay)-1, 23)][1] - LastDay[0][1]) + '''
+        '''.format(position=Today[0][0], queue=Today[0][1], days=Today[0][2],
+                   pt=Today[len(Today)-1][0] - Today[0][0], qt=Today[len(Today)-1][1] - Today[0][1],
+                   p24=LastDay[min(len(LastDay)-1, 23)][0] - LastDay[0][0], q24=LastDay[min(len(LastDay)-1, 23)][1] - LastDay[0][1],
+                   p48=LastTwoDays[min(len(LastTwoDays)-1, 47)][0] - LastTwoDays[0][0], q48=LastTwoDays[min(len(LastTwoDays)-1, 47)][1] - LastTwoDays[0][1]) + '''
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.0/dist/chart.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
         <script>
