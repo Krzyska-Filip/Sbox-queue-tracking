@@ -231,7 +231,7 @@ def generatePage():
                     <p>[Last 48h] Position: {p48}</p>
                 </div>
                 <div class="queueStats">
-                    <p>[Today] Position: {qt}</p>
+                    <p>[Today] Queue: {qt}</p>
                     <p>[Last 24h] Queue: {q24}</p>
                     <p>[Last 48h] Queue: {q48}</p>
                 </div>
