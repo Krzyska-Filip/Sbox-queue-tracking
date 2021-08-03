@@ -333,10 +333,9 @@ def generatePage():
         hour2 = str('{},'.format([LastDay[x][3][11:16] for x in range(min(len(LastDay),24))]))[1:-2],
         data2 = str('{},'.format([LastDay[x][1] for x in range(min(len(LastDay),24))]))[1:-2],
     )
-    with open('Tracking.html', 'w') as f:
+    with open('tracking.html', 'w') as f:
         f.write(page)
 
-generatePage()
 #schedule notification every hour at x:00
 schedule.every().hour.at(":00").do(getInfo)
 while 1:

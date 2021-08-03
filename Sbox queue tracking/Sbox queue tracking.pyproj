@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5991af9b-4c3e-4812-a155-496729bc61ae}</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Sbox_queue_tracking.py</StartupFile>
+    <StartupFile>sbox_queue_tracking.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Sbox_queue_tracking.py" />
+    <Compile Include="sbox_queue_tracking.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
